@@ -3,6 +3,8 @@ const country = require('./gmaps');
 const hbs = require('hbs');
 const fs = require('fs');
 
+const port = process.env.PORT || 8080;
+
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -41,7 +43,7 @@ app.get('/', (request, response) => {
 
 app.get('/info', (request, response) => {
     response.render('about.hbs', {
-        title: 'Abouot page',
+        title: 'About page',
         year: new Date().getFullYear(),
         welcome: 'Hello!'
     });
@@ -56,7 +58,7 @@ app.get('/404', (request, response) => {
 country.getCountry('Canada', (errorMessage, results) => {
     if (errorMessage) {
         console.log(errorMessage)
-    } else {;
+    } else {
         country.getWeather(results.country, results.city, (errorMessage, results) => {
             if (errorMessage) {
                 console.log(errorMessage)
@@ -67,7 +69,7 @@ country.getCountry('Canada', (errorMessage, results) => {
     }
 });
 
-app.listen(8080, () => {
-    console.log('Server is up on the port 8080')
+app.listen(port, () => {
+    console.log(`Server is up on the port ${port}`)
 });
 
